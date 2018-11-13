@@ -69,7 +69,7 @@ function writeToDocument(url) {
             // if not using the +, then it will print only the very last of loop as it overwrites
         });
         
-        el.innerHTML = `<table>${tableHeaders}${tableRows}</table>${pagination}`;
+        el.innerHTML = `<table>${tableHeaders}${tableRows}</table>${pagination}`.replace(/,/g,""); //replace all commas with empty strings that appear at the beginning. /g means global search
     });
 }
 
