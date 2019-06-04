@@ -42,12 +42,20 @@ function writeToDocument(url) {
     
     getData(url, function(data) {
         
-        var pagination; 
+        var pagination = ""; 
+        
+        //console.log('data.next', data.next); //https://swapi.co/api/people/?page=2
+        //console.log('data.previous', data.previous); //null
+        
         if (data.next || data.previous) {
             pagination = generatePaginationButtons(data.next, data.previous) //look it as a linked list
         }
         
         data = data.results;
+        //console.log('data', data);
+        
+        //console.log('data[0]', data[0]);
+        
         // console.log(data); // or // console.dir(data); // what access our data has. maybe insert it before the data.results to see all of its objs 
         var tableHeaders = getTableHeaders(data[0]); //data[0] is the first row
         
@@ -73,3 +81,54 @@ function writeToDocument(url) {
     });
 }
 
+/*
+
+function getData(url, cb) { 
+    var xhr = new XMLHttpRequest();
+    xhr.overrideMimeType("application/json");
+    xhr.open("GET", url, true); 
+    xhr.send();
+    xhr.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
+            cb(JSON.parse(this.responseText)); 
+                                               
+        }
+    };
+}
+    
+getData('https://swapi.co/api/people', function(data) {
+    console.log(data);
+    data = data.results;
+    data.forEach(function(item) {
+        Object.keys(item).forEach(function(key) {
+            var rowData = item[key].toString();
+            var truncatedData = rowData.substring(0,15);
+            console.log(truncatedData);
+        });
+    });
+});
+
+
+Output:
+{count: 87, next: "https://swapi.co/api/people/?page=2", previous: null, results: Array(10)}count: 87next: "https://swapi.co/api/people/?page=2"previous: nullresults: (10) [{…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}]__proto__: Object
+script.js:44 Luke Skywalker
+script.js:44 172
+script.js:44 77
+script.js:44 blond
+script.js:44 fair
+script.js:44 blue
+script.js:44 19BBY
+script.js:44 male
+5script.js:44 https://swapi.c
+script.js:44 2014-12-09T13:5
+script.js:44 2014-12-20T21:1
+script.js:44 https://swapi.c
+script.js:44 C-3PO
+script.js:44 167
+script.js:44 75
+script.js:44 n/a
+script.js:44 gold
+script.js:44 yellow
+script.js:44 112BBY
+
+*/
